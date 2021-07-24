@@ -1,35 +1,32 @@
 ﻿module GameDealer
+
 open Game
 
-type TableauDealState = {
-    remainingCards: Card list;
-    tableau: Card list list;
-}
+type TableauDealState =
+    { RemainingCards: Card list
+      Tableau: Card list list }
 
-let dealTableau(deck: Card list) =
-    let initialValue = { 
-        remainingCards = deck; 
-        tableau = List.empty 
-    }
+let dealTableau (deck: Card list) =
+    let initialValue =
+        { RemainingCards = deck
+          Tableau = List.empty }
 
-    seq { 1..7 }
+    seq { 1 .. 7 }
     |> Seq.rev
-    |> Seq.fold(fun acc tabIndex ->
-        let (new_tableau, remainder) = acc.remainingCards |> List.splitAt(tabIndex)
-        {
-            remainingCards = remainder;
-            tableau = new_tableau :: acc.tableau
-        }
-    ) initialValue
+    |> Seq.fold
+        (fun acc tabIndex ->
+            let (newTableau, remainder) =
+                acc.RemainingCards |> List.splitAt (tabIndex)
 
+            { RemainingCards = remainder
+              Tableau = newTableau :: acc.Tableau })
+        initialValue
 
-let dealGame(): Game =
-    let deck = CardDealer.dealCards()
-    let { remainingCards = stock; tableau = tableau } = dealTableau(deck)
-    {
-        Wastepile = List.Empty;
-        Stock = stock;
-        Tableau = tableau;
-        Foundations = List.Empty;
-    }
-    
+let dealGame () : Game =
+    let deck = CardDealer.dealCards ()
+    let dealTableauState = dealTableau (deck)
+
+    { Wastepile = List.Empty
+      Stock = dealTableauState.RemainingCards
+      Tableau = dealTableauState.Tableau
+      Foundations = List.Empty }
