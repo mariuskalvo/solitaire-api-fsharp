@@ -18,9 +18,9 @@ namespace Solitaire.Api.Controllers
         }
 
         [HttpPost]
-        public async Task CreateGame([FromBody] GameWeb game)
+        public async Task CreateGame()
         {
-            _gameState.CreateGame(game);
+            var game = GameService.dealGame();
             await Task.Yield();
         }
 
