@@ -1,4 +1,4 @@
-﻿module GameService
+﻿module GameDealer
 open Game
 
 

@@ -20,7 +20,7 @@ namespace Solitaire.Api.Controllers
         [HttpPost]
         public async Task CreateGame()
         {
-            var game = GameService.dealGame();
+            var game = GameDealer.dealGame();
             await Task.Yield();
         }
 

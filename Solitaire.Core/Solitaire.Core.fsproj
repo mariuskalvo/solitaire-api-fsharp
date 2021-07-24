@@ -9,8 +9,7 @@
   <ItemGroup>
     <Compile Include="Models\Game.fs" />
     <Compile Include="State\GameState.fs" />
-    <Compile Include="Services\GameService.fs" />
-    <Compile Include="Library.fs" />
+    <Compile Include="Core\GameDealer.fs" />
   </ItemGroup>
 
 </Project>
