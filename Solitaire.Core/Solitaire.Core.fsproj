@@ -9,6 +9,7 @@
   <ItemGroup>
     <Compile Include="Models\Game.fs" />
     <Compile Include="State\GameState.fs" />
+    <Compile Include="Core\CardDealer.fs" />
     <Compile Include="Core\GameDealer.fs" />
   </ItemGroup>
 
