@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Solitaire.Services\Solitaire.Services.fsproj" />
+    <ProjectReference Include="..\..\Solitaire.Core\Solitaire.Core.fsproj" />
   </ItemGroup>
 
 </Project>

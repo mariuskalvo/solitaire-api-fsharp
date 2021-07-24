@@ -1,4 +1,4 @@
-module Solitaire.Services.GameServiceTests
+module Solitaire.Core.GameServiceTests
 
 open NUnit.Framework
 open GameService
