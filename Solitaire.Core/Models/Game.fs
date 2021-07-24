@@ -14,4 +14,5 @@ type Game = {
     Tableau: Card list list;
     Stock: Card list;
     Wastepile: Card list;
+    Foundations: Card list list;
 }

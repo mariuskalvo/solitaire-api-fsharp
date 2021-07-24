@@ -31,5 +31,6 @@ let dealGame(): Game =
         Wastepile = List.Empty;
         Stock = stock;
         Tableau = tableau;
+        Foundations = List.Empty;
     }
     
