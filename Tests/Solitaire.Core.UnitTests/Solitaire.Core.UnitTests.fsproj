@@ -7,7 +7,7 @@
   <ItemGroup>
     <Compile Include="MoveHandlerTests.fs" />
     <Compile Include="CardDealerTests.fs" />
-    <Compile Include="GameServiceTests.fs" />
+    <Compile Include="GameDealerTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />

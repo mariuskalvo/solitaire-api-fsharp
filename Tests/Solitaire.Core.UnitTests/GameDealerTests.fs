@@ -1,6 +1,8 @@
-module Solitaire.Core.GameServiceTests
+module Solitaire.Core.GameDealerTests
 
 open NUnit.Framework
+
+
 
 [<Test>]
 let WhenDealTableauThenSevenColumnsAreCreated () =

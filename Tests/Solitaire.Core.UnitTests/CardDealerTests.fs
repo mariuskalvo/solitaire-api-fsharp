@@ -12,3 +12,4 @@ let WhenDealCardsThenAllCardsAreUnique () =
     let cards = CardDealer.dealCards ()
     let distinctCards = List.distinct (cards)
     Assert.AreEqual(cards.Length, distinctCards.Length)
+
