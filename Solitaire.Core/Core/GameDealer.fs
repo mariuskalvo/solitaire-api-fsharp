@@ -27,7 +27,6 @@ let dealGame(): Game =
     let deck = CardDealer.dealCards()
     let { remainingCards = stock; tableau = tableau } = dealTableau(deck)
     {
-        Id = System.Guid.NewGuid();
         Wastepile = List.Empty;
         Stock = stock;
         Tableau = tableau;

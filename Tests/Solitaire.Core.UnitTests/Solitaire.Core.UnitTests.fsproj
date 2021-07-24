@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="MoveHandlerTests.fs" />
     <Compile Include="CardDealerTests.fs" />
     <Compile Include="GameServiceTests.fs" />
   </ItemGroup>

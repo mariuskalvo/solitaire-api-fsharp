@@ -1,7 +1,5 @@
 ﻿module Game
 
-open System
-
 type Suit = Clubs | Diamonds | Hearts | Spades
 
 type Card = {
@@ -10,7 +8,6 @@ type Card = {
 }
 
 type Game = {
-    Id:Guid;
     Tableau: Card list list;
     Stock: Card list;
     Wastepile: Card list;

@@ -7,10 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Utils\ListUtils.fs" />
     <Compile Include="Models\Game.fs" />
-    <Compile Include="State\GameState.fs" />
+    <Compile Include="Core\MoveHandler.fs" />
     <Compile Include="Core\CardDealer.fs" />
     <Compile Include="Core\GameDealer.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="State\" />
   </ItemGroup>
 
 </Project>
