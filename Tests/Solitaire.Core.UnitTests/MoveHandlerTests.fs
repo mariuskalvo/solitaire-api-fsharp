@@ -24,6 +24,7 @@ let WhenMoveFromStockToTableauStockIsEmptyThenIsNoOp () =
     let game =
         { Tableau = [ [ { Rank = 1; Suit = Diamonds } ] ]
           Stock = []
+          ActiveStock = []
           Foundations = []
           Wastepile = [] }
 
@@ -39,6 +40,7 @@ let WhenMoveFromStockToTableauStockHasOneCardThenStockIsLeftEmpty () =
         { Tableau = [ [] ]
           Stock = [ { Rank = 1; Suit = Diamonds } ]
           Foundations = []
+          ActiveStock = []
           Wastepile = [] }
 
     let destIdx = 0

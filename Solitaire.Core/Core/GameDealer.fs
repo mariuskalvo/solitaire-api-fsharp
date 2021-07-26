@@ -15,8 +15,7 @@ let dealTableau (deck: Card list) =
     |> Seq.rev
     |> Seq.fold
         (fun acc tabIndex ->
-            let (newTableau, remainder) =
-                acc.RemainingCards |> List.splitAt (tabIndex)
+            let (newTableau, remainder) = List.splitAt tabIndex acc.RemainingCards
 
             { RemainingCards = remainder
               Tableau = newTableau :: acc.Tableau })
@@ -26,7 +25,8 @@ let dealGame () : Game =
     let deck = CardDealer.dealCards ()
     let dealTableauState = dealTableau (deck)
 
-    { Wastepile = List.Empty
-      Stock = dealTableauState.RemainingCards
+    { Stock = dealTableauState.RemainingCards
       Tableau = dealTableauState.Tableau
+      Wastepile = List.Empty
+      ActiveStock = List.Empty
       Foundations = List.Empty }

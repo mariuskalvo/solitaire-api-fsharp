@@ -12,6 +12,7 @@
     <Compile Include="Core\MoveHandler.fs" />
     <Compile Include="Core\CardDealer.fs" />
     <Compile Include="Core\GameDealer.fs" />
+    <Compile Include="Core\StockHandler.fs" />
   </ItemGroup>
 
   <ItemGroup>

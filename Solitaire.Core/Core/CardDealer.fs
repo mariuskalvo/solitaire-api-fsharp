@@ -4,9 +4,7 @@ open Game
 
 let private shuffleCards (cards: Card list) : Card list =
     let rnd = System.Random()
-
-    cards
-    |> List.sortBy (fun _ -> rnd.Next(1, cards.Length))
+    List.sortBy (fun _ -> rnd.Next(1, cards.Length)) cards
 
 let dealCards () =
     let suits = [ Diamonds; Clubs; Spades; Hearts ]
