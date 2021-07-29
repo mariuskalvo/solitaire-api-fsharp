@@ -19,4 +19,6 @@
     <Folder Include="State\" />
   </ItemGroup>
 
+  <ItemGroup />
+
 </Project>

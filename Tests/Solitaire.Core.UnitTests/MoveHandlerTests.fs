@@ -14,8 +14,7 @@ let WhenMoveFromStockToTableauAppendsToCorrectTableauColumn () =
           Wastepile = [] }
 
     let destIdx = 0
-    let moveCommand = ActiveToTableau({ DestIndex = destIdx })
-    let updatedGame = handleMove (game, moveCommand)
+    let updatedGame = handleMove (game, ActiveStock, Tableau 0)
     let newTableauColumn = updatedGame.Tableau.[destIdx]
 
     Assert.AreEqual(1, newTableauColumn.Length)
@@ -31,9 +30,7 @@ let WhenMoveFromStockToTableauStockIsEmptyThenIsNoOp () =
           Foundations = []
           Wastepile = [] }
 
-    let destIdx = 0
-    let moveCommand = ActiveToTableau({ DestIndex = destIdx })
-    let updatedGame = handleMove (game, moveCommand)
+    let updatedGame = handleMove (game, ActiveStock, Tableau 0)
 
     Assert.AreEqual(game, updatedGame)
 
@@ -47,8 +44,7 @@ let WhenMoveFromActiveToTableauActiveHasOneCardThenActiveIsLeftEmpty () =
           Wastepile = [] }
 
     let destIdx = 0
-    let moveCommand = ActiveToTableau({ DestIndex = destIdx })
-    let updatedGame = handleMove (game, moveCommand)
+    let updatedGame = handleMove (game, ActiveStock, Tableau 0 )
 
     let oldTableauColumn = game.Tableau.[destIdx]
     let newTableauColumn = updatedGame.Tableau.[destIdx]
@@ -66,8 +62,7 @@ let WhenMoveFromStockToFoundationAndStockIsEmptyThenIsNoOp () =
           Foundations = [ [] ]
           Wastepile = [] }
 
-    let moveCommand = ActiveToFoundations({ DestIndex = 0 })
-    let updatedGame = handleMove (game, moveCommand)
+    let updatedGame = handleMove (game, ActiveStock, Foundations 0)
     Assert.AreEqual(game, updatedGame)
 
 [<Test>]
@@ -79,8 +74,7 @@ let WhenMoveFromSTockToFoundationAndStockIsNotEmptyThenCardIsMoved () =
           Foundations = [ [] ]
           Wastepile = [] }
 
-    let moveCommand = ActiveToFoundations({ DestIndex = 0 })
-    let updatedGame = handleMove (game, moveCommand)
+    let updatedGame = handleMove (game, ActiveStock, Foundations 0)
 
     let updatedFoundation = updatedGame.Foundations.Head
     Assert.AreEqual(1, updatedFoundation.Length)
