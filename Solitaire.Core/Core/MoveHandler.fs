@@ -1,6 +1,7 @@
 ﻿module MoveHandler
 
 open Game
+open ListUtils
 
 type CardArea =
     | Foundations of int
@@ -12,9 +13,9 @@ let private moveFromActiveToTableau (game: Game, tableauIndex: int) =
     | [] -> game
     | aHead :: aTail ->
         let newTableauColumn = aHead :: game.Tableau.[tableauIndex]
-
+        
         let newTableau =
-            ListUtils.replaceAt (game.Tableau, tableauIndex, newTableauColumn)
+            replaceAt tableauIndex newTableauColumn game.Tableau
 
         { game with
               Tableau = newTableau
@@ -29,7 +30,7 @@ let private moveFromActiveToFoundations (game, destIndex) =
             stockHead :: game.Foundations.[destIndex]
 
         let newFoundations =
-            ListUtils.replaceAt (game.Foundations, destIndex, newDestFoundation)
+            replaceAt destIndex newDestFoundation game.Foundations
 
         { game with
               Foundations = newFoundations
@@ -45,10 +46,9 @@ let private moveFromTableauToFoundations (game, srcIndex, destIndex) =
         let newFoundation = tabHead :: foundation
 
         let newFoundations =
-            ListUtils.replaceAt (game.Foundations, destIndex, newFoundation)
+            replaceAt destIndex newFoundation game.Foundations
 
-        let newTableau =
-            ListUtils.replaceAt (game.Tableau, srcIndex, tabTail)
+        let newTableau = replaceAt srcIndex tabTail game.Tableau
 
         { game with
               Foundations = newFoundations
@@ -65,14 +65,14 @@ let private moveFromFoundationsToTableau (game, srcIndex, destIndex) =
         let newTableau = fHead :: tableauColumn
 
         let newFoundations =
-            ListUtils.replaceAt (game.Foundations, destIndex, fTail)
+            replaceAt destIndex fTail game.Foundations
 
-        let newTableau =
-            ListUtils.replaceAt (game.Tableau, srcIndex, newTableau)
+        let newTableaus =
+            replaceAt srcIndex newTableau game.Tableau
 
         { game with
               Foundations = newFoundations
-              Tableau = newTableau }
+              Tableau = newTableaus }
 
 
 
