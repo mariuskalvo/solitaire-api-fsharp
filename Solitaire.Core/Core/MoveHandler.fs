@@ -75,6 +75,21 @@ let private moveFromFoundationsToTableau (game, srcIndex, destIndex) =
               Tableau = newTableaus }
 
 
+let private moveFromTableauToTableau (game: Game, srcIndex: int, destIndex: int): Game = 
+    let srcColumn = game.Tableau.[srcIndex]
+    let destColumn = game.Tableau.[destIndex]
+
+    match srcColumn with
+    | [] -> game
+    | tHead::tTail ->
+        let newDestColumn = tHead :: destColumn
+
+        let newTableau = 
+            game.Tableau
+            |> replaceAt srcIndex tTail
+            |> replaceAt destIndex newDestColumn
+
+        { game with Tableau = newTableau }
 
 
 let handleMove (game: Game, source: CardArea, dest: CardArea) : Game =
@@ -82,7 +97,7 @@ let handleMove (game: Game, source: CardArea, dest: CardArea) : Game =
     | (ActiveStock, Tableau i) -> moveFromActiveToTableau (game, i)
     | (ActiveStock, Foundations i) -> moveFromActiveToFoundations (game, i)
     | (Tableau i, Foundations j) -> moveFromTableauToFoundations (game, i, j)
-    | (Tableau i, Tableau j) -> game
+    | (Tableau i, Tableau j) -> moveFromTableauToTableau(game, i, j)
     | (Foundations i, Tableau j) -> moveFromFoundationsToTableau (game, i, j)
     | (Foundations i, Foundations j) -> game
     | _, _ -> game

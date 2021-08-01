@@ -79,3 +79,29 @@ let WhenMoveFromSTockToFoundationAndStockIsNotEmptyThenCardIsMoved () =
     let updatedFoundation = updatedGame.Foundations.Head
     Assert.AreEqual(1, updatedFoundation.Length)
     Assert.IsEmpty(updatedGame.ActiveStock)
+
+
+[<Test>]
+let WhenMoveFromTableauToTableauThenTheCardIsMoved () =
+    let game =
+        { Tableau = [[{ Rank = 1; Suit = Diamonds }]; [{ Rank = 2; Suit = Diamonds }]]
+          Stock = []
+          ActiveStock = []
+          Foundations = [ [] ]
+          Wastepile = [] }
+
+    let updatedGame = handleMove (game, Tableau 0, Tableau 1)
+    Assert.IsEmpty(updatedGame.Tableau.Head)
+    Assert.AreEqual(2, updatedGame.Tableau.[1].Length)
+
+[<Test>]
+let WhenMoveFromTableauToTableauAndSourceIsEmptyThenItIsNoOp () =
+    let game =
+        { Tableau = [[]; [{ Rank = 2; Suit = Diamonds }]]
+          Stock = []
+          ActiveStock = []
+          Foundations = [ [] ]
+          Wastepile = [] }
+
+    let updatedGame = handleMove (game, Tableau 0, Tableau 1)
+    Assert.AreEqual(game, updatedGame)
