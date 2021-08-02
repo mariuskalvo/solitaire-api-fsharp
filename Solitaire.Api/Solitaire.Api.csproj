@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Solitaire.Core\Solitaire.Core.fsproj" />
+    <ProjectReference Include="..\Solitaire.Infrastructure\Solitaire.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

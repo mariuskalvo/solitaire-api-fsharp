@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Solitaire.Api.State;
+using Solitaire.Infrastructure.Repositories;
 
 namespace Solitaire.Api
 {
@@ -27,6 +28,8 @@ namespace Solitaire.Api
             });
 
             services.AddSingleton<IActiveGameCollectionState, ActiveGameCollectionState>();
+            services.AddSingleton<IGameRepository, GameRepository>();
+            services.AddSingleton<GameService.GameService, GameService.GameService>();
             //services.AddSingleton<IGameService, GameService>();
         }
 

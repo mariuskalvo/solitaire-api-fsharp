@@ -5,7 +5,7 @@ namespace Solitaire.Api.State
 {
     public interface IActiveGameCollectionState
     {
-        IEnumerable<GameWeb> GetGames();
-        void CreateGame(GameWeb game);
+        IEnumerable<Game.Game> GetGames();
+        void CreateGame(Game.Game game);
     }
 }

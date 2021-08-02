@@ -13,12 +13,15 @@
     <Compile Include="Core\CardDealer.fs" />
     <Compile Include="Core\GameDealer.fs" />
     <Compile Include="Core\StockHandler.fs" />
+    <Compile Include="Services\GameService.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="State\" />
   </ItemGroup>
 
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Solitaire.Infrastructure\Solitaire.Infrastructure.csproj" />
+  </ItemGroup>
 
 </Project>

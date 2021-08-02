@@ -107,6 +107,7 @@ let private moveFromFoundationToFoundation (game: Game, srcIndex: int, destIndex
 
         { game with Foundations = newTableau }
 
+
 let handleMove (game: Game, source: CardArea, dest: CardArea) : Game =
     match (source, dest) with
     | (ActiveStock, Tableau i) -> moveFromActiveToTableau (game, i)
