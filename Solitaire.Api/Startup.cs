@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Solitaire.Api.State;
+using Solitaire.Api.Mappers;
 using Solitaire.Infrastructure.Repositories;
 
 namespace Solitaire.Api
@@ -27,10 +27,9 @@ namespace Solitaire.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Solitaire.Api", Version = "v1" });
             });
 
-            services.AddSingleton<IActiveGameCollectionState, ActiveGameCollectionState>();
-            services.AddSingleton<IGameRepository, GameRepository>();
-            services.AddSingleton<GameService.GameService, GameService.GameService>();
-            //services.AddSingleton<IGameService, GameService>();
+            services.AddTransient<IGameRepository, GameRepository>();
+            services.AddTransient<GameService.GameService, GameService.GameService>();
+            services.AddSingleton<IGameMapper, GameMapper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Solitaire.Api.Mappers;
 using Solitaire.Api.Models;
 using Solitaire.Api.State;
-using Solitaire.Infrastructure.Repositories;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Solitaire.Api.Controllers
@@ -11,29 +10,29 @@ namespace Solitaire.Api.Controllers
     [Route("[controller]")]
     public class GameController : ControllerBase
     {
-        private readonly IActiveGameCollectionState _gameState;
         private GameService.GameService _gameService;
+        private IGameMapper _gameMapper;
 
-        public GameController(IActiveGameCollectionState gameState, GameService.GameService gameService)
+        public GameController(GameService.GameService gameService, IGameMapper gameMapper)
         {
-            _gameState = gameState;
             _gameService = gameService;
+            _gameMapper = gameMapper;
         }
 
         [HttpPost]
-        public async Task CreateGame()
+        public async Task<GameWeb> CreateGame()
         {
-            var game = GameDealer.dealGame();
-            _gameState.CreateGame(game);
-            await Task.Yield();
+            var newGame = _gameService.Create();
+            var newGameWeb = _gameMapper.MapGameToGameWeb(newGame);
+            return await Task.FromResult(newGameWeb);
         }
 
         [HttpGet]
-        public IActionResult GetGames()
+        public async Task<GameWeb> GetGame()
         {
-            var game = GameDealer.dealGame();
-            var updatedGame = _gameService.Move(game, MoveHandler.CardArea.NewTableau(1), MoveHandler.CardArea.NewTableau(0));
-            return  Ok();
+            var newGame = _gameService.Create();
+            var newGameWeb = _gameMapper.MapGameToGameWeb(newGame);
+            return await Task.FromResult(newGameWeb);
         }
     }
 }

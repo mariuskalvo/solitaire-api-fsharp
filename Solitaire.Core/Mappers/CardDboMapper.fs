@@ -1,4 +1,4 @@
-﻿module CardMapper
+﻿module CardDboMapper
 
 open Solitaire.Infrastructure.Models
 open Game

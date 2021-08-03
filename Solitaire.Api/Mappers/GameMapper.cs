@@ -1,4 +1,5 @@
-﻿using Solitaire.Api.Models;
+﻿using Microsoft.FSharp.Collections;
+using Solitaire.Api.Models;
 using System.Linq;
 
 namespace Solitaire.Api.Mappers
@@ -7,8 +8,7 @@ namespace Solitaire.Api.Mappers
     {
         private CardSuitWeb GetCardSuitWebFromCard(Game.Suit suit)
         {
-
-            if (suit.IsClubs)
+            if (suit == Game.Suit.Hearts)
             {
                 return CardSuitWeb.CLUBS;
             }
@@ -62,14 +62,29 @@ namespace Solitaire.Api.Mappers
         {
             return new GameWeb
             {
-                Stock = game.Stock.ToList().Select(MapCardToCardWeb),
-                Wastepile = game.Wastepile.ToList().Select(MapCardToCardWeb)
+                Stock = game.Stock.ToList().Select(MapCardToCardWeb).ToList(),
+                Wastepile = game.Wastepile.ToList().Select(MapCardToCardWeb).ToList(),
+                Active = game.ActiveStock.ToList().Select(MapCardToCardWeb).ToList(),
+                Foundations = game.Foundations.Select((column) => column.Select(MapCardToCardWeb).ToList()).ToList(),
+                Tableau = game.Tableau.Select((column) => column.Select(MapCardToCardWeb).ToList()).ToList(),
             };
         }
 
         public Game.Game MapGameWebToGame(GameWeb gameWeb)
         {
-            throw new System.NotImplementedException();
+            var stock = ListModule.OfSeq(gameWeb.Stock.Select(MapCardWebToCard));
+            var active = ListModule.OfSeq(gameWeb.Active.Select(MapCardWebToCard));
+            var wastepile = ListModule.OfSeq(gameWeb.Wastepile.Select(MapCardWebToCard));
+
+            var tableau = ListModule.OfSeq(gameWeb.Tableau.Select(
+                (column) => ListModule.OfSeq(column.Select(MapCardWebToCard))
+            ));
+
+            var foundations = ListModule.OfSeq(gameWeb.Tableau.Select(
+                (column) => ListModule.OfSeq(column.Select(MapCardWebToCard))
+             ));
+
+            return new Game.Game(tableau, stock, active, wastepile, foundations);
         }
     }
 }

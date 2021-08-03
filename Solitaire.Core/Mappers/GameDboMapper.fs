@@ -1,7 +1,7 @@
-﻿module GameMapper
+﻿module GameDboMapper
 
 open Solitaire.Infrastructure.Models
-open CardMapper
+open CardDboMapper
 open Game
 
 

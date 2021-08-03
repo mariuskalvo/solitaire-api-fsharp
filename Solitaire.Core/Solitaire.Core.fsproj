@@ -13,8 +13,8 @@
     <Compile Include="Core\CardDealer.fs" />
     <Compile Include="Core\GameDealer.fs" />
     <Compile Include="Core\StockHandler.fs" />
-    <Compile Include="Mappers\CardMapper.fs" />
-    <Compile Include="Mappers\GameMapper.fs" />
+    <Compile Include="Mappers\CardDboMapper.fs" />
+    <Compile Include="Mappers\GameDboMapper.fs" />
     <Compile Include="Services\GameService.fs" />
   </ItemGroup>
 
