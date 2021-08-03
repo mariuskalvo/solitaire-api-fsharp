@@ -1,10 +1,17 @@
-﻿namespace Solitaire.Infrastructure.Repositories
+﻿using Solitaire.Infrastructure.Models;
+
+namespace Solitaire.Infrastructure.Repositories
 {
     public class GameRepository : IGameRepository
     {
-        public string getValue()
+        public GameDbo CreateGame(GameDbo game)
         {
-            return "real value";
+            return game;
+        }
+
+        public GameDbo UpdateGame(GameDbo game)
+        {
+            return game;
         }
     }
 }
