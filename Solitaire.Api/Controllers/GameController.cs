@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Solitaire.Api.Mappers;
 using Solitaire.Api.Models;
-using Solitaire.Api.State;
 using System.Threading.Tasks;
 
 namespace Solitaire.Api.Controllers
