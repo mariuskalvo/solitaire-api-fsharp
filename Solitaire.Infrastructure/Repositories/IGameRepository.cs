@@ -1,10 +1,13 @@
 ﻿using Solitaire.Infrastructure.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Solitaire.Infrastructure.Repositories
 {
     public interface IGameRepository
     {
-        GameDbo UpdateGame(GameDbo game);
-        GameDbo CreateGame(GameDbo game);
+        Task<GameDbo> UpdateGame(GameDbo game);
+        Task<GameDbo> CreateGame(GameDbo game);
+        Task<List<GameDbo>> GetGames();
     }
 }

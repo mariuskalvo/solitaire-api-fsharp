@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.FSharp.Control;
+using Microsoft.FSharp.Core;
 using Solitaire.Api.Mappers;
 using Solitaire.Api.Models;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Solitaire.Api.Controllers
@@ -21,16 +24,25 @@ namespace Solitaire.Api.Controllers
         [HttpPost]
         public async Task<GameWeb> CreateGame()
         {
-            var newGame = _gameService.Create();
-            var newGameWeb = _gameMapper.MapGameToGameWeb(newGame);
+            var createdGame = FSharpAsync.RunSynchronously(
+              _gameService.Create(),
+              timeout: FSharpOption<int>.None,
+              cancellationToken: FSharpOption<CancellationToken>.None
+          );
+            var newGameWeb = _gameMapper.MapGameToGameWeb(createdGame);
             return await Task.FromResult(newGameWeb);
         }
 
         [HttpGet]
         public async Task<GameWeb> GetGame()
         {
-            var newGame = _gameService.Create();
-            var newGameWeb = _gameMapper.MapGameToGameWeb(newGame);
+            var createdGame = FSharpAsync.RunSynchronously(
+                _gameService.Create(),
+                timeout: FSharpOption<int>.None,
+                cancellationToken: FSharpOption<CancellationToken>.None
+            );
+
+            var newGameWeb = _gameMapper.MapGameToGameWeb(createdGame);
             return await Task.FromResult(newGameWeb);
         }
     }
