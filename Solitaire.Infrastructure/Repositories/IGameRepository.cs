@@ -1,4 +1,5 @@
 ﻿using Solitaire.Infrastructure.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,5 +10,6 @@ namespace Solitaire.Infrastructure.Repositories
         Task<GameDbo> UpdateGame(GameDbo game);
         Task<GameDbo> CreateGame(GameDbo game);
         Task<List<GameDbo>> GetGames();
+        Task<GameDbo> GetGameById(Guid id);
     }
 }

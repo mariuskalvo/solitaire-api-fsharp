@@ -1,4 +1,5 @@
 ﻿using Solitaire.Api.Models;
+using static MoveHandler;
 
 namespace Solitaire.Api.Mappers
 {
@@ -6,6 +7,7 @@ namespace Solitaire.Api.Mappers
     {
         Game.Game MapGameWebToGame(GameWeb gameWeb);
         GameWeb MapGameToGameWeb(Game.Game game);
+        CardArea MapCardAreaWebToCardGame(CardAreaWeb cardArea);
 
     }
 }

@@ -3,6 +3,7 @@
 open MoveHandler
 open Game
 open Solitaire.Infrastructure.Repositories
+open System
 
 type GameService(gameRepository: IGameRepository) =
     member this.Move(game: Game, source: CardArea, dest: CardArea) : Async<Game> =
@@ -22,20 +23,28 @@ type GameService(gameRepository: IGameRepository) =
         async {
             let newGame = GameDealer.dealGame()
             let newGameDbo = GameDboMapper.mapGameToGameDbo(newGame)
-            let persistedGameDbo =
+            let! persistedGameDbo =
                 gameRepository.CreateGame(newGameDbo)
                 |> Async.AwaitTask
-                |> Async.RunSynchronously
             return GameDboMapper.mapGameDboToGame(persistedGameDbo);
         }
 
     member this.GetAllGames() :Async<Game list> =
         async {
-            let games = 
+            let! games = 
                 gameRepository.GetGames()
                 |> Async.AwaitTask
-                |> Async.RunSynchronously
-                |> Seq.toList
 
-            return games |> List.map(fun g -> GameDboMapper.mapGameDboToGame(g))
+            return 
+                games 
+                |> Seq.toList 
+                |> List.map(fun g -> GameDboMapper.mapGameDboToGame(g))
+        }
+
+    member this.GetGameById(id: Guid) :Async<Game> =
+        async {
+            let! game = 
+                gameRepository.GetGameById(id)
+                |> Async.AwaitTask
+            return GameDboMapper.mapGameDboToGame(game)
         }

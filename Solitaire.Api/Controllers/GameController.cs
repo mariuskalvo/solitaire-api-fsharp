@@ -3,8 +3,12 @@ using Microsoft.FSharp.Control;
 using Microsoft.FSharp.Core;
 using Solitaire.Api.Mappers;
 using Solitaire.Api.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using static MoveHandler;
 
 namespace Solitaire.Api.Controllers
 {
@@ -22,7 +26,7 @@ namespace Solitaire.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<GameWeb> CreateGame()
+        public GameWeb CreateGame()
         {
             var createdGame = FSharpAsync.RunSynchronously(
               _gameService.Create(),
@@ -30,20 +34,38 @@ namespace Solitaire.Api.Controllers
               cancellationToken: FSharpOption<CancellationToken>.None
           );
             var newGameWeb = _gameMapper.MapGameToGameWeb(createdGame);
-            return await Task.FromResult(newGameWeb);
+            return newGameWeb;
         }
 
         [HttpGet]
-        public async Task<GameWeb> GetGame()
+        public List<GameWeb> GetGames()
         {
             var createdGame = FSharpAsync.RunSynchronously(
-                _gameService.Create(),
+                _gameService.GetAllGames(),
                 timeout: FSharpOption<int>.None,
-                cancellationToken: FSharpOption<CancellationToken>.None
-            );
+                cancellationToken: FSharpOption<CancellationToken>.None);
 
-            var newGameWeb = _gameMapper.MapGameToGameWeb(createdGame);
-            return await Task.FromResult(newGameWeb);
+            return createdGame.Select(_gameMapper.MapGameToGameWeb).ToList();
+        }
+
+
+        [HttpPost]
+        public GameWeb Move([FromBody] MoveParams moveParams)
+        {
+            var source = _gameMapper.MapCardAreaWebToCardGame(moveParams.Source);
+            var destination = _gameMapper.MapCardAreaWebToCardGame(moveParams.Destination);
+
+            var game = FSharpAsync.RunSynchronously(
+                _gameService.GetGameById(moveParams.GameId),
+                timeout: FSharpOption<int>.None,
+                cancellationToken: FSharpOption<CancellationToken>.None);
+
+            var updatedGame = FSharpAsync.RunSynchronously(
+                _gameService.Move(game, source, destination),
+                timeout: FSharpOption<int>.None,
+                cancellationToken: FSharpOption<CancellationToken>.None);
+
+            return _gameMapper.MapGameToGameWeb(updatedGame);
         }
     }
 }

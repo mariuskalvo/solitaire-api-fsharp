@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Solitaire.Infrastructure.Models
 {
     public class GameDbo
     {
+        public Guid id { get; set; }
         public List<CardDbo> Stock { get; set; }
         public List<CardDbo> Active { get; set; }
         public List<CardDbo> Wastepile { get; set; }

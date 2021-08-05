@@ -1,6 +1,8 @@
 ﻿using Microsoft.FSharp.Collections;
 using Solitaire.Api.Models;
+using System;
 using System.Linq;
+using static MoveHandler;
 
 namespace Solitaire.Api.Mappers
 {
@@ -85,6 +87,17 @@ namespace Solitaire.Api.Mappers
              ));
 
             return new Game.Game(tableau, stock, active, wastepile, foundations);
+        }
+
+        public CardArea MapCardAreaWebToCardGame(CardAreaWeb cardAreaWeb)
+        {
+            return cardAreaWeb.CardArea switch
+            {
+                CardAreaTypeWeb.Tableau => CardArea.NewTableau(cardAreaWeb.Index),
+                CardAreaTypeWeb.Foundation => CardArea.NewTableau(cardAreaWeb.Index),
+                CardAreaTypeWeb.Active => CardArea.ActiveStock,
+                _ => throw new ArgumentException("Invalid card area specified")
+            };
         }
     }
 }

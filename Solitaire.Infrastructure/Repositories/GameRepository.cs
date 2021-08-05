@@ -32,6 +32,18 @@ namespace Solitaire.Infrastructure.Repositories
             return game;
         }
 
+        public async Task<GameDbo> GetGameById(Guid id)
+        {
+            using (var dbConnection = new NpgsqlConnection(connectionString))
+            {
+                var sql = "SELECT p.id as Id, p.state as State, p.created_at as CreatedAt FROM games p WHERE p.id = @Id";
+                var polls = await dbConnection.QuerySingleAsync<GameDbo>(sql, new {
+                    Id = id
+                });
+                return polls;
+            }
+        }
+
         public async Task<List<GameDbo>> GetGames()
         {
             using (var dbConnection = new NpgsqlConnection(connectionString))
