@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Solitaire.Api.Mappers;
 using Solitaire.Infrastructure.Repositories;
+using System.Text.Json.Serialization;
 
 namespace Solitaire.Api
 {
@@ -21,7 +22,14 @@ namespace Solitaire.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services
+                .AddControllers()
+                .AddJsonOptions(opts =>
+                {
+                    var enumConverter = new JsonStringEnumConverter();
+                    opts.JsonSerializerOptions.Converters.Add(enumConverter);
+                });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Solitaire.Api", Version = "v1" });
@@ -40,6 +48,9 @@ namespace Solitaire.Api
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Solitaire.Api v1"));
+                app.UseCors(
+                    options => options.WithOrigins("http://localhost:3000").AllowAnyMethod()
+                );
             }
 
             app.UseRouting();

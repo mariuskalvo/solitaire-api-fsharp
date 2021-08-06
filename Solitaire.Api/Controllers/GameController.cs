@@ -49,7 +49,7 @@ namespace Solitaire.Api.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPut]
         public GameWeb Move([FromBody] MoveParams moveParams)
         {
             var source = _gameMapper.MapCardAreaWebToCardGame(moveParams.Source);
