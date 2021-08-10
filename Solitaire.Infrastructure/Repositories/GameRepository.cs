@@ -11,8 +11,17 @@ using System.Threading.Tasks;
 
 namespace Solitaire.Infrastructure.Repositories
 {
+
     class InsertGameDto
     {
+        [Column(TypeName = "json")]
+        public string State { get; set; }
+
+    }
+
+    class GetGameDto
+    {
+        public Guid Id { get; set; }
         [Column(TypeName = "json")]
         public string State { get; set; }
 
@@ -36,7 +45,7 @@ namespace Solitaire.Infrastructure.Repositories
         {
             using (var dbConnection = new NpgsqlConnection(connectionString))
             {
-                var sql = "SELECT p.id as Id, p.state as State, p.created_at as CreatedAt FROM games p WHERE p.id = @Id";
+                var sql = "SELECT p.id as Id, p.state as State, p.created_at as CreatedAt FROM game p WHERE p.id = @Id";
                 var polls = await dbConnection.QuerySingleAsync<GameDbo>(sql, new {
                     Id = id
                 });
@@ -49,9 +58,16 @@ namespace Solitaire.Infrastructure.Repositories
             using (var dbConnection = new NpgsqlConnection(connectionString))
             {
                 var pollDictionary = new Dictionary<string, GameDbo>();
-                var sql = "SELECT p.id as Id, p.state as State, p.created_at as CreatedAt FROM games p";
-                var polls = await dbConnection.QueryAsync<GameDbo>(sql);
-                return polls.ToList();
+                var sql = "SELECT p.id as Id, p.state as State, p.created_at as CreatedAt FROM game p";
+                var polls = await dbConnection.QueryAsync<GetGameDto>(sql);
+                var yeet = polls.Select((poll) =>
+                {
+                    var game = JsonConvert.DeserializeObject<GameDbo>(poll.State);
+                    game.id = poll.Id;
+                    return game;
+                });
+
+                return yeet.ToList();
             }
         }
 
