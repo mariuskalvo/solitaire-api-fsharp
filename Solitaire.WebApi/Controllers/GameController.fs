@@ -13,9 +13,17 @@ type GameController (logger : ILogger<GameController>, gameService : GameService
     [<HttpGet()>]
     member _.Get() =
         gameService.GetAllGames()
+        |> Async.RunSynchronously
+        |> List.map(GameMapper.mapGameToGameWeb)
 
     [<HttpGet("{id}")>]
     member _.GetById(id: Guid) =
         gameService.GetGameById(id)
+            |> Async.RunSynchronously
+            |> GameMapper.mapGameToGameWeb
 
-    
+    [<HttpPost>]
+    member _.CreateGame() =
+        gameService.Create()
+        |> Async.RunSynchronously
+        |> GameMapper.mapGameToGameWeb 

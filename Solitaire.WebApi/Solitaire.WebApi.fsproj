@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Models\GameWeb.fs" />
+    <Compile Include="Mappers\GameMapper.fs" />
     <Compile Include="Controllers\GameController.fs" />
     <Compile Include="WeatherForecast.fs" />
     <Compile Include="Controllers/WeatherForecastController.fs" />
