@@ -2,6 +2,7 @@
 
 open Solitaire.Infrastructure.Models
 open Game
+open System
 
 let mapCardDboToCard(card: CardDbo): Card =
     
@@ -10,6 +11,7 @@ let mapCardDboToCard(card: CardDbo): Card =
     | SuitDbo.Spades -> Spades
     | SuitDbo.Hearts -> Hearts
     | SuitDbo.Clubs -> Clubs
+    | _ -> raise (ArgumentException("Invalid suit value passed to mapper"))
 
     {
         Rank = card.Rank
