@@ -1,5 +1,7 @@
 ﻿module Game
 
+open System
+
 type Suit =
     | Clubs
     | Diamonds
@@ -14,3 +16,5 @@ type Game =
       ActiveStock: Card list
       Wastepile: Card list
       Foundations: Card list list }
+
+type GameOverview = { Id: Guid; CreatedAt: DateTime }

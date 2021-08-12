@@ -9,7 +9,7 @@ namespace Solitaire.Infrastructure.Repositories
     {
         Task<GameDbo> UpdateGame(GameDbo game);
         Task<GameDbo> CreateGame(GameDbo game);
-        Task<List<GameDbo>> GetGames();
+        Task<List<GameOverviewDbo>> GetGames();
         Task<GameDbo> GetGameById(Guid id);
     }
 }

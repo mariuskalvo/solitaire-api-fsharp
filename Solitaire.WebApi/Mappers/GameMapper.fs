@@ -17,7 +17,6 @@ let HeartsSuit = "HEARTS"
 let SpadesSuit = "SPADES"
 
 let private mapCardToCardWeb (card: Card) : CardWeb =
-
     let suit =
         match card.Suit with
         | Clubs -> ClubsSuit

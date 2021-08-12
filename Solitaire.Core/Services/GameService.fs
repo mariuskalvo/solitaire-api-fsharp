@@ -29,7 +29,7 @@ type GameService(gameRepository: IGameRepository) =
             return GameDboMapper.mapGameDboToGame(persistedGameDbo);
         }
 
-    member this.GetAllGames() :Async<Game list> =
+    member this.GetAllGames() :Async<GameOverview list> =
         async {
             let! games = 
                 gameRepository.GetGames()
@@ -38,7 +38,7 @@ type GameService(gameRepository: IGameRepository) =
             return 
                 games 
                 |> Seq.toList 
-                |> List.map(fun g -> GameDboMapper.mapGameDboToGame(g))
+                |> List.map(GameDboMapper.mapGameOverviewDboToGame)
         }
 
     member this.GetGameById(id: Guid) :Async<Game> =

@@ -24,8 +24,9 @@ namespace Solitaire.Infrastructure.Repositories
         public Guid Id { get; set; }
         [Column(TypeName = "json")]
         public string State { get; set; }
-
     }
+
+
     public class GameRepository : IGameRepository
     {
         const string connectionString = "Server=localhost;Port=5432;Database=solitaire;User ID=postgres;Password=12345;";
@@ -53,21 +54,13 @@ namespace Solitaire.Infrastructure.Repositories
             }
         }
 
-        public async Task<List<GameDbo>> GetGames()
+        public async Task<List<GameOverviewDbo>> GetGames()
         {
             using (var dbConnection = new NpgsqlConnection(connectionString))
             {
-                var pollDictionary = new Dictionary<string, GameDbo>();
-                var sql = "SELECT p.id as Id, p.state as State, p.created_at as CreatedAt FROM game p";
-                var polls = await dbConnection.QueryAsync<GetGameDto>(sql);
-                var yeet = polls.Select((poll) =>
-                {
-                    var game = JsonConvert.DeserializeObject<GameDbo>(poll.State);
-                    game.id = poll.Id;
-                    return game;
-                });
-
-                return yeet.ToList();
+                var sql = "SELECT p.id as Id, p.created_at as CreatedAt FROM game p";
+                var polls = await dbConnection.QueryAsync<GameOverviewDbo>(sql);
+                return polls.ToList();
             }
         }
 
