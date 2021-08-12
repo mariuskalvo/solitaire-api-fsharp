@@ -8,7 +8,6 @@ open Microsoft.Extensions.Hosting
 open GameService
 open Solitaire.Infrastructure.Repositories
 open Microsoft.OpenApi.Models
-open System.Text.Json.Serialization
 
 type Startup(configuration: IConfiguration) =
     member _.Configuration = configuration
@@ -24,13 +23,7 @@ type Startup(configuration: IConfiguration) =
             c.SwaggerDoc("v1", cfg) |> ignore
         ) |> ignore
         
-        let enumConverter = JsonStringEnumConverter  
-
-        services
-            .AddControllers()
-            .AddJsonOptions(fun opt ->
-                opt.JsonSerializerOptions.Converters.Add(JsonStringEnumConverter())
-            ) |> ignore
+        services.AddControllers()|> ignore
         services.AddTransient<GameService, GameService>() |> ignore
         services.AddTransient<IGameRepository, GameRepository>() |> ignore
 
