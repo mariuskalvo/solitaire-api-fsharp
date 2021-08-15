@@ -19,7 +19,7 @@ namespace Solitaire.Infrastructure.Repositories
 
     }
 
-    class GetGameDto
+    class GameDboDto
     {
         public Guid Id { get; set; }
         [Column(TypeName = "json")]
@@ -47,10 +47,14 @@ namespace Solitaire.Infrastructure.Repositories
             using (var dbConnection = new NpgsqlConnection(connectionString))
             {
                 var sql = "SELECT p.id as Id, p.state as State, p.created_at as CreatedAt FROM game p WHERE p.id = @Id";
-                var polls = await dbConnection.QuerySingleAsync<GameDbo>(sql, new {
+                var gameDbo = await dbConnection.QuerySingleAsync<GameDboDto>(sql, new {
                     Id = id
                 });
-                return polls;
+
+                var game = JsonConvert.DeserializeObject<GameDbo>(gameDbo.State);
+                game.id = id;
+
+                return game;
             }
         }
 

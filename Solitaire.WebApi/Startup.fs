@@ -16,16 +16,21 @@ type Startup(configuration: IConfiguration) =
     member _.ConfigureServices(services: IServiceCollection) =
         // Add framework services.
 
-        services.AddSwaggerGen(fun c ->
-            let cfg = OpenApiInfo()
-            cfg.Title <- "Solitaire.WebApi"
-            cfg.Version <- "V1"
-            c.SwaggerDoc("v1", cfg) |> ignore
-        ) |> ignore
-        
-        services.AddControllers()|> ignore
-        services.AddTransient<GameService, GameService>() |> ignore
-        services.AddTransient<IGameRepository, GameRepository>() |> ignore
+        services.AddSwaggerGen
+            (fun c ->
+                let cfg = OpenApiInfo()
+                cfg.Title <- "Solitaire.WebApi"
+                cfg.Version <- "V1"
+                c.SwaggerDoc("v1", cfg) |> ignore)
+        |> ignore
+
+        services.AddControllers() |> ignore
+
+        services.AddTransient<GameService, GameService>()
+        |> ignore
+
+        services.AddTransient<IGameRepository, GameRepository>()
+        |> ignore
 
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,13 +38,20 @@ type Startup(configuration: IConfiguration) =
         if (env.IsDevelopment()) then
             app.UseDeveloperExceptionPage() |> ignore
             app.UseSwagger() |> ignore
-            app.UseSwaggerUI(fun c -> c.SwaggerEndpoint("/swagger/v1/swagger.json", "Solitaire.Api v1")) |> ignore
-            app.UseCors(fun opt ->
-                opt.WithOrigins("http://localhost:3000").AllowAnyMethod() |> ignore
-            ) |> ignore
 
-        app.UseRouting()
-           .UseAuthorization()
-           .UseEndpoints(fun endpoints ->
-                 endpoints.MapControllers() |> ignore
-             ) |> ignore
+            app.UseSwaggerUI(fun c -> c.SwaggerEndpoint("/swagger/v1/swagger.json", "Solitaire.Api v1"))
+            |> ignore
+
+            app.UseCors
+                (fun opt ->
+                    opt
+                        .WithOrigins("http://localhost:3000")
+                        .AllowAnyMethod()
+                    |> ignore)
+            |> ignore
+
+        app
+            .UseRouting()
+            .UseAuthorization()
+            .UseEndpoints(fun endpoints -> endpoints.MapControllers() |> ignore)
+        |> ignore

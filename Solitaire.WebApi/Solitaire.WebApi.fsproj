@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Include="Models\GameWeb.fs" />
+    <Compile Include="Models\GameMoveWeb.fs" />
     <Compile Include="Mappers\GameMapper.fs" />
     <Compile Include="Controllers\GameController.fs" />
     <Compile Include="Startup.fs" />
